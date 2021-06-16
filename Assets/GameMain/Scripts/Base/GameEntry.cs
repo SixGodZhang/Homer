@@ -12,6 +12,7 @@ namespace Homer
             Log.Info("call GameEntry.Start()...");
             //Debug.Log("call GameEntry.Start()....");
             InitBuiltinComponents();
+            InitCustomComponents();
         }
     }
 }

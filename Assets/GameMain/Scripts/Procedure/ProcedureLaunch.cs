@@ -17,7 +17,9 @@ namespace Homer
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            Log.Info("call OnEnter...");
+
+            // 读取配置
+            GameEntry.BuiltinData.InitBuildInfo();
         }
 
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
