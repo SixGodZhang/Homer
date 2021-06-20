@@ -33,3 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Logs/Packages-Update.log
+Assets/StreamingAssets/1.mp4
+Assets/StreamingAssets/1.mp4.meta

@@ -10,6 +10,9 @@ namespace Homer
         [SerializeField]
         private TextAsset m_BuildInfoTextAsset = null;
 
+        [SerializeField]
+        private TextAsset m_DefaultDictionaryTextAsset = null;
+
         private BuildInfo m_BuildInfo = null;
         public BuildInfo BuildInfo
         {
@@ -32,7 +35,23 @@ namespace Homer
             }
 
             // test
-            Log.Info("Init Build Info success !");
+            // Log.Info("Init Build Info success !");
+        }
+
+        public void InitDefaultDictionary()
+        {
+            if (m_DefaultDictionaryTextAsset == null || string.IsNullOrEmpty(m_DefaultDictionaryTextAsset.text))
+            {
+                Log.Info("Default dictionary can not be found or empty.");
+                return;
+            }
+
+            // 读取默认字典中的数据
+            if (!GameEntry.Localization.ParseData(m_DefaultDictionaryTextAsset.text))
+            {
+                Log.Warning("Parse default dictionary failure.");
+                return;
+            }
         }
     }
 }
