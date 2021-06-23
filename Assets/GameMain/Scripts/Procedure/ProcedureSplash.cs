@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameFramework.Fsm;
 using GameFramework.Procedure;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace Homer
@@ -13,23 +14,31 @@ namespace Homer
     {
         public override bool UseNativeDialog => true;
 
+        private GameObject m_SplashCavas = null;
+
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            // TODO : 这里播放一个Splash 动画
-            // ...
+            // 这里播放一个Splash 动画
+            if (m_SplashCavas == null)
+            {
+                m_SplashCavas = FindGameObjectUtility.FindGameObject("Splash");
+                if (m_SplashCavas != null)
+                {
+                    m_SplashCavas.SetActive(true);
+                    return;
+                }
+            }
 
             // TODO 三种模式需要处理, 这里只处理了编辑器模式
-            //if (GameEntry.Base.EditorResourceMode)
-            //{
-            //    // 编辑器模式
-            //    Log.Info("Editor resource mode detected.");
-            //    // TODO ....
-            //}
-
-            if (VideoPlay.isEndVideo) // 如果視頻播放完畢， 切換到主场景
+            if (GameEntry.Base.EditorResourceMode && VideoPlay.isEndVideo)
             {
+                // 编辑器模式
+                Log.Info("Editor resource mode detected.");
+                m_SplashCavas.SetActive(false);
+
+                // 如果視頻播放完畢， 切換到主场景
                 procedureOwner.SetData<VarInt32>("NextSceneId", 1);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }

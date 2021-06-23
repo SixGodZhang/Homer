@@ -35,34 +35,6 @@ namespace Homer
             // 默认字典: 加载默认字典文件 Assets/GameMain/Configs/DefaultDictionary.xml
             // 此字典文件记录了资源更新前使用的各种语言的字符串
             GameEntry.BuiltinData.InitDefaultDictionary();
-
-            // 加载指定数据表
-            // test
-            InitDataTables();
-        }
-
-        private void InitDataTables()
-        {
-            string[] DataTableNames = new string[]
-            {
-                "Music", // 音乐表
-                //"Scene", // 场景表
-            };
-
-            
-            foreach (string dataTableName in DataTableNames)
-            {
-                LoadDataTable(dataTableName);
-            }
-
-        }
-
-        // test
-        // 加载指定数据表
-        public void LoadDataTable(string dataTableName)
-        {
-            string dataTableAssetName = AssetUtility.GetDataTableAsset(dataTableName, false);
-            GameEntry.DataTable.LoadDataTable(dataTableName, dataTableAssetName, this);
         }
 
         private void InitSoundSettings()
@@ -110,13 +82,15 @@ namespace Homer
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            // 运行一帧即切换到 Splash 展示流程
+
             // ChangeState<Produ>
             // GameEntry.Config.GetInt("Scene.Splash")
             // 0 表示 Splash.unity
             // 1 表示MainCity.unity
-            procedureOwner.SetData<VarInt32>("NextSceneId", 1);
-            ChangeState<ProcedureChangeScene>(procedureOwner);
+            //procedureOwner.SetData<VarInt32>("NextSceneId", 1);
+            //ChangeState<ProcedureChangeScene>(procedureOwner);
+            // 运行一帧即切换到 Splash 展示流程
+            ChangeState<ProcedurePreload>(procedureOwner);
         }
 
         private void InitLanguageSettings()
