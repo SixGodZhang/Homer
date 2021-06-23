@@ -21,10 +21,11 @@ namespace Homer
 
         public override bool UseNativeDialog => false;
 
-        private Dictionary<int, string> m_TempSceneDict = new Dictionary<int, string>()
+        private Dictionary<int, List<string>> m_TempSceneDict = new Dictionary<int, List<string>>()
         {
-            { 0, "Splash" },
-            { 1, "MainCity" },
+            // list 场景名字, 音乐资源名
+            { 0, new List<string>(){"Splash","1" } },
+            { 1, new List<string>(){"MainCity","2" } },
         };
 
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
@@ -58,10 +59,18 @@ namespace Homer
             int sceneId = procedureOwner.GetData<VarInt32>("NextSceneId");
             m_ChangeToMainCity = sceneId == MainCityMenuId;
             //TODO 这里应该根据场景Id去读表的
-            var assetName = string.Empty;
-            m_TempSceneDict.TryGetValue(sceneId, out assetName);
-            GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset(assetName), Constant.AssetPriority.SceneAsset, this);
+            var sceneAssetName = string.Empty;
+            var musicAssetName = string.Empty;
+            List<string> assetInfo = null;
+            m_TempSceneDict.TryGetValue(sceneId, out assetInfo);
+            if (assetInfo.Count == 2)
+            {
+                sceneAssetName = assetInfo[0];
+                musicAssetName = assetInfo[1];
+            }
+            GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset(sceneAssetName), Constant.AssetPriority.SceneAsset, this);
             // 这里应该还需要加载场景的背景音乐
+            m_BackgroundMusicId = int.Parse(musicAssetName);
         }
 
         protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
@@ -139,6 +148,7 @@ namespace Homer
             if (m_BackgroundMusicId > 0)
             {
                 // TODO 播放背景音乐
+                GameEntry.Sound.PlayMusic(m_BackgroundMusicId);
             }
 
             m_IsChangeSceneComplete = true;
