@@ -39,7 +39,7 @@ namespace Homer
                 m_SplashCavas.SetActive(false);
 
                 // 如果視頻播放完畢， 切換到主场景
-                procedureOwner.SetData<VarInt32>("NextSceneId", 1);
+                procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.MainCity"));
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }
