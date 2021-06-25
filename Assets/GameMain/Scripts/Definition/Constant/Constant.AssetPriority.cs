@@ -25,6 +25,10 @@ namespace Homer
             /// mp3
             /// </summary>
             public const int MusicAsset = 20;
+            /// <summary>
+            /// UI界面资源
+            /// </summary>
+            public const int UIFormAsset = 50;
         }
     }
 }

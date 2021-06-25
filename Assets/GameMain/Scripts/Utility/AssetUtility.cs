@@ -51,6 +51,27 @@ namespace Homer
             return Utility.Text.Format("Assets/GameMain/Configs/{0}.{1}", assetName, fromBytes ? "bytes" : "txt");
         }
 
+        /// <summary>
+        /// 字典
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <param name="fromBytes"></param>
+        /// <returns></returns>
+        public static string GetDictionaryAsset(string assetName, bool fromBytes)
+        {
+            return Utility.Text.Format("Assets/GameMain/Localization/{0}/Dictionaries/{1}.{2}", GameEntry.Localization.Language.ToString(), assetName, fromBytes ? "bytes" : "xml");
+        }
+
+        /// <summary>
+        /// UI界面资源
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <returns></returns>
+        public static string GetUIFormAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/UI/UIForms/{0}.prefab", assetName);
+        }
+
 
     }
 }

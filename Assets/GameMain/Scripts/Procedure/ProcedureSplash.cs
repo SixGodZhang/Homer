@@ -38,9 +38,7 @@ namespace Homer
                 Log.Info("Editor resource mode detected.");
                 m_SplashCavas.SetActive(false);
 
-                // 如果視頻播放完畢， 切換到主场景
-                procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.MainCity"));
-                ChangeState<ProcedureChangeScene>(procedureOwner);
+                ChangeState<ProcedureSelectServer>(procedureOwner);
             }
         }
     }

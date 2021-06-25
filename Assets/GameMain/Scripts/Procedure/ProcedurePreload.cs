@@ -20,6 +20,7 @@ namespace Homer
         public static readonly string[] DataTableNames = new string[]
         {
             "Music",
+            "UIForm",
             //"Scene", 
             //"Sound",
         };
@@ -38,6 +39,9 @@ namespace Homer
             GameEntry.Event.Subscribe(LoadConfigSuccessEventArgs.EventId, OnLoadConfigSuccess);
             GameEntry.Event.Subscribe(LoadConfigFailureEventArgs.EventId, OnLoadConfigFailure);
 
+            // 字典
+            GameEntry.Event.Subscribe(LoadDictionarySuccessEventArgs.EventId, OnLoadDictionarySuccess);
+            GameEntry.Event.Subscribe(LoadDictionaryFailureEventArgs.EventId, OnLoadDictionaryFailure);
 
             m_LoadedFlag.Clear();
             PreLoadResources();
@@ -49,7 +53,32 @@ namespace Homer
             GameEntry.Event.Unsubscribe(LoadDataTableFailureEventArgs.EventId, OnLoadDataTableFailure);
             GameEntry.Event.Unsubscribe(LoadConfigSuccessEventArgs.EventId, OnLoadConfigSuccess);
             GameEntry.Event.Unsubscribe(LoadConfigFailureEventArgs.EventId, OnLoadConfigFailure);
+            GameEntry.Event.Unsubscribe(LoadDictionarySuccessEventArgs.EventId, OnLoadDictionarySuccess);
+            GameEntry.Event.Unsubscribe(LoadDictionaryFailureEventArgs.EventId, OnLoadDictionaryFailure);
             base.OnLeave(procedureOwner, isShutdown);
+        }
+
+        private void OnLoadDictionaryFailure(object sender, GameEventArgs e)
+        {
+            LoadDictionaryFailureEventArgs ne = (LoadDictionaryFailureEventArgs)e;
+            if (ne.UserData != this)
+            {
+                return;
+            }
+
+            Log.Error("Can not load dictionary {0} with error message {1}", ne.DictionaryAssetName, ne.ErrorMessage);
+        }
+
+        private void OnLoadDictionarySuccess(object sender, GameEventArgs e)
+        {
+            LoadDictionarySuccessEventArgs ne = (LoadDictionarySuccessEventArgs)e;
+            if (ne.UserData != this)
+            {
+                return;
+            }
+
+            m_LoadedFlag[ne.DictionaryAssetName] = true;
+            Log.Info("Load dictionary {0} OK.", ne.DictionaryAssetName);
         }
 
         private void OnLoadDataTableSuccess(object sender, GameEventArgs e)
@@ -121,6 +150,16 @@ namespace Homer
             {
                 LoadDataTable(dataTableName);
             }
+
+            // Preload dictionaries
+            LoadDictionary("Default");
+        }
+
+        private void LoadDictionary(string dictionaryName)
+        {
+            string dictinaryAssetName = AssetUtility.GetDictionaryAsset(dictionaryName, false);
+            m_LoadedFlag.Add(dictinaryAssetName, false);
+            GameEntry.Localization.ReadData(dictinaryAssetName, this);
         }
 
         private void LoadConfig(string configName)
