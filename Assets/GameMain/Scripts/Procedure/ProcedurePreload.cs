@@ -21,6 +21,7 @@ namespace Homer
         {
             "Music",
             "UIForm",
+            "ServerList",
             //"Scene", 
             //"Sound",
         };
@@ -100,7 +101,7 @@ namespace Homer
             {
                 return;
             }
-            Log.Error("Can not load data table ‘{0}’ with error message '{2}'", ne.DataTableAssetName, ne.DataTableAssetName);
+            Log.Error("Can not load data table ‘{0}’ with error message '{1}'", ne.DataTableAssetName, ne.DataTableAssetName);
         }
 
         private void OnLoadConfigSuccess(object sender, GameEventArgs e)
@@ -159,6 +160,7 @@ namespace Homer
         {
             string dictinaryAssetName = AssetUtility.GetDictionaryAsset(dictionaryName, false);
             m_LoadedFlag.Add(dictinaryAssetName, false);
+            // "Assets/GameMain/Localization/ChineseSimplified/Dictionaries/Default.xml"
             GameEntry.Localization.ReadData(dictinaryAssetName, this);
         }
 

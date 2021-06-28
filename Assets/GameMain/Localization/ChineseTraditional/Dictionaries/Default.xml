@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dictionaries>
+  <Dictionary Language="ChineseTraditional">
+    <String Key="Game.Name" Value="KurtzPel" />
+    <String Key="Server.Name" Value="台灣" />
+    <String Key="Game.Start" Value="開始" />
+  </Dictionary>
+</Dictionaries>

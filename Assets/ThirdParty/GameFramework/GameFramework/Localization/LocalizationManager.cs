@@ -1022,20 +1022,28 @@ namespace GameFramework.Localization
         /// </summary>
         /// <param name="key">字典主键。</param>
         /// <param name="value">字典内容。</param>
+        /// <param name="force">是否强制覆盖</param>
         /// <returns>是否增加字典成功。</returns>
-        public bool AddRawString(string key, string value)
+        public bool AddRawString(string key, string value, bool force)
         {
             if (string.IsNullOrEmpty(key))
             {
                 throw new GameFrameworkException("Key is invalid.");
             }
 
-            if (m_Dictionary.ContainsKey(key))
+            if (force && m_Dictionary.ContainsKey(key))
+            {
+                m_Dictionary[key] = value;
+            }
+            else if (!force && m_Dictionary.ContainsKey(key))
             {
                 return false;
             }
-
-            m_Dictionary.Add(key, value ?? string.Empty);
+            else
+            {
+                m_Dictionary.Add(key, value ?? string.Empty);
+            }
+            
             return true;
         }
 

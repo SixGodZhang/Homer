@@ -106,6 +106,14 @@ namespace Homer
         }
 
 #if UNITY_2017_3_OR_NEWER
+        protected override void OnRecycle()
+#else
+        protected internal override void OnRecycle()
+#endif
+        {
+            base.OnRecycle();
+        }
+#if UNITY_2017_3_OR_NEWER
         protected override void OnOpen(object userData)
 #else
         protected internal override void OnOpen(object userData)
@@ -190,7 +198,16 @@ namespace Homer
         protected internal override void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
 #endif
         {
+            int oldDepth = Depth;
             base.OnDepthChanged(uiGroupDepth, depthInUIGroup);
+            int deltaDepth = UGuiGroupHelper.DepthFactor * uiGroupDepth + DepthFactor * depthInUIGroup - oldDepth + OriginalDepth;
+            GetComponentsInChildren(true, m_CachedCavasContainer);
+            for (int i = 0; i < m_CachedCavasContainer.Count; i++)
+            {
+                m_CachedCavasContainer[i].sortingOrder += deltaDepth;
+            }
+
+            m_CachedCavasContainer.Clear();
         }
 
         private IEnumerator CloseCo(float duration)

@@ -486,8 +486,9 @@ namespace GameFramework.Localization
         /// </summary>
         /// <param name="key">字典主键。</param>
         /// <param name="value">字典内容。</param>
+        /// <param name="force">如果已经存在该键, 是否强制覆盖</param>
         /// <returns>是否增加字典成功。</returns>
-        bool AddRawString(string key, string value);
+        bool AddRawString(string key, string value, bool force);
 
         /// <summary>
         /// 移除字典。

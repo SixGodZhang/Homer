@@ -2,5 +2,7 @@
 <Dictionaries>
   <Dictionary Language="ChineseSimplified">
     <String Key="Game.Name" Value="KurtzPel" />
+    <String Key="Server.Name" Value="中国" />
+    <String Key="Game.Start" Value="开始" />
   </Dictionary>
 </Dictionaries>

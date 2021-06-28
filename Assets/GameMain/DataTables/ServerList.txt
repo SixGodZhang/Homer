@@ -1,0 +1,7 @@
+﻿#	服务器列表	
+#	Id		ServerName		ServerLanguage
+#	int		string		string
+#	服务器编号	备注	服务器名字	服务器语言
+	1	中国	Chinese	ChineseSimplified
+	2	美服	English	English
+	3	台服	Taiwan	ChineseTraditional

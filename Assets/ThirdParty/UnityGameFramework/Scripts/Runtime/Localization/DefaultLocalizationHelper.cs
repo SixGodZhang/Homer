@@ -160,7 +160,7 @@ namespace UnityGameFramework.Runtime
 
                     string dictionaryKey = splitedLine[1];
                     string dictionaryValue = splitedLine[3];
-                    if (!localizationManager.AddRawString(dictionaryKey, dictionaryValue))
+                    if (!localizationManager.AddRawString(dictionaryKey, dictionaryValue, true ))
                     {
                         Log.Warning("Can not add raw string with dictionary key '{0}' which may be invalid or duplicate.", dictionaryKey);
                         return false;
@@ -197,7 +197,7 @@ namespace UnityGameFramework.Runtime
                         {
                             string dictionaryKey = binaryReader.ReadString();
                             string dictionaryValue = binaryReader.ReadString();
-                            if (!localizationManager.AddRawString(dictionaryKey, dictionaryValue))
+                            if (!localizationManager.AddRawString(dictionaryKey, dictionaryValue, true))
                             {
                                 Log.Warning("Can not add raw string with dictionary key '{0}' which may be invalid or duplicate.", dictionaryKey);
                                 return false;
